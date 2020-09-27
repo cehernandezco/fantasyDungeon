@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
 
     
 
+    
+
   
     // Start is called before the first frame update
     void Start()
@@ -94,6 +96,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+           
             Attack(); //calling attack function
             hit.Play();
         }
@@ -142,12 +145,13 @@ public class Player : MonoBehaviour
         animator.SetTrigger("Attack1"); //play animation
 
         Collider2D[] hitEnemey = Physics2D.OverlapCircleAll(attack.position, attackingRange, enemy ); //to hit the enemy with the position and range of the player to enemy
-        
+       
 
         foreach (Collider2D enemy in hitEnemey)
         {
             print("hitting " + enemy.name); //print out name of the enemy
             enemy.GetComponent<EnemyPatrol>().TakeDamage(20); // enemy damage is equals to 20
+            
         }
 
        
@@ -186,7 +190,7 @@ public class Player : MonoBehaviour
        
         animator.SetBool("Die", true); //play death animation
         print("player Died");//print out 
-                            // GetComponent<Collider2D>().enabled = true;//to disable the collider after death
+                           
         this.enabled = false;//to disable the script after death
         Destroy(gameObject, 2);
 

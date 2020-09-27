@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
-  attackingRange: 5
+  attackingRange: 1
   anim: {fileID: 476778263}
   patrol: 0
   rb2d: {fileID: 476778260}
@@ -1203,6 +1203,7 @@ MonoBehaviour:
   healthbar: {fileID: 336577527}
   killCount: {fileID: 775625508}
   enemyDeath: 0
+  blood: {fileID: 5195171005474437022, guid: 6cda23178c6345b49bc094a21df2d029, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,6 +1214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
+  - component: {fileID: 519420033}
   - component: {fileID: 519420030}
   - component: {fileID: 519420029}
   m_Layer: 0
@@ -1301,6 +1303,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7d651d6eacf6a41ad6278eab6df479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: 10
 --- !u!1 &615878309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2500,6 +2515,7 @@ MonoBehaviour:
   healthbar: {fileID: 1677814405}
   killCount: {fileID: 775625508}
   enemyDeath: 0
+  blood: {fileID: 5195171005474437022, guid: 6cda23178c6345b49bc094a21df2d029, type: 3}
 --- !u!95 &1110065505
 Animator:
   serializedVersion: 3
@@ -3881,7 +3897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
-  attackingRange: 3
+  attackingRange: 1
   anim: {fileID: 2009281643}
   patrol: 0
   rb2d: {fileID: 2009281645}
@@ -3900,6 +3916,7 @@ MonoBehaviour:
   healthbar: {fileID: 1006308974}
   killCount: {fileID: 775625508}
   enemyDeath: 0
+  blood: {fileID: 5195171005474437022, guid: 6cda23178c6345b49bc094a21df2d029, type: 3}
 --- !u!95 &2009281643
 Animator:
   serializedVersion: 3

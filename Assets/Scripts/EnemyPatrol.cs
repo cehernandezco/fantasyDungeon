@@ -140,7 +140,7 @@ public class EnemyPatrol : MonoBehaviour
     public GameObject healthbar;
     public Text killCount;
     public int enemyDeath;
-
+    public GameObject blood;
 
     void Start()
     {
@@ -214,9 +214,11 @@ public class EnemyPatrol : MonoBehaviour
 
     public void TakeDamage(int Damage) //take damage funcction
     {
+        
         healthbar.transform.localScale = new Vector3(currentHealth / maxHealth, healthbar.transform.localScale.x, healthbar.transform.localScale.z);
         currentHealth -= Damage;//if hit then current health will be minus the damage point
-        
+        Instantiate(blood, transform.position, Quaternion.identity);
+        ScreenShake.instance.StartShake(0.2f, .2f);
         anim.SetTrigger("Hurt");//play hurt animation
         
         if (currentHealth <= 0) //if enemy health is less than or equals to 0 then run the function
@@ -248,7 +250,19 @@ public class EnemyPatrol : MonoBehaviour
     public void Attack()
     {
         
+        
+
+      /*  Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attack.position, attackingRange, Player); //to hit the enemy with the position and range of the player to enemy
+
+
+        foreach (Collider2D player in hitPlayer)
+        {
+            print("hitting " + player.name); //print out name of the enemy
+            player.GetComponent<Player>().TakeDamage(1); // enemy damage is equals to 20
+
+        }*/
+        anim.SetTrigger("Attack");
     }
 
-    
+
 }
