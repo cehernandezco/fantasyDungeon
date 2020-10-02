@@ -166,15 +166,18 @@ public class EnemyPatrol : MonoBehaviour
         disToPlayer = Vector2.Distance(transform.position, player.position);
         if(disToPlayer <= range)
         {
-            if(player.position.x > transform.position.x && transform.localScale.x < 0
+            
+            if (player.position.x > transform.position.x && transform.localScale.x < 0
                 || player.position.x < transform.position.x && transform.localScale.x > 0)
             {
+                
                 Flip();
+                Attack();
             }
-
+            Attack();
             patrol = false;
             rb2d.velocity = Vector2.zero;
-            Attack();
+            
         }
         else
         {
@@ -190,6 +193,7 @@ public class EnemyPatrol : MonoBehaviour
         if(patrol)
         {
             turn = !Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+            
         }
     }
 
@@ -241,7 +245,7 @@ public class EnemyPatrol : MonoBehaviour
         print("Enemy Died");//print out 
        // GetComponent<Collider2D>().enabled = true;//to disable the collider after death
         this.enabled = false;//to disable the script after death
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1);
         
 
     }
@@ -262,7 +266,9 @@ public class EnemyPatrol : MonoBehaviour
 
         }*/
         anim.SetTrigger("Attack");
+        player.GetComponent<Player>().TakeDamage(1 );
     }
 
 
+  
 }

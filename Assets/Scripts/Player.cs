@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public static int health;
+    public int health;
+    public Text countText;
+    private int count = 0;
 
     public float speed;
     public float jumpforce;
@@ -34,12 +36,16 @@ public class Player : MonoBehaviour
     AudioSource hit;
     AudioSource walk;
     AudioSource music;
+    AudioSource pickup;
 
-    
+    public GameObject heart1;
+    public GameObject heart2;
+    public GameObject heart3;
 
-    
 
-  
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,8 +57,11 @@ public class Player : MonoBehaviour
         hit = audios[1];
         walk = audios[2];
         music = audios[3];
+        pickup = audios[4];
+       
 
         music.Play();
+        CountText();
     }
     
 
@@ -174,13 +183,41 @@ public class Player : MonoBehaviour
 
         animator.SetTrigger("Hurt");//play hurt animation
 
-        if (health <= 0) //if enemy health is less than or equals to 0 then run the function
+        if (health == 3)
         {
-            
+            heart3.SetActive(true);
+            heart2.SetActive(true);
+            heart1.SetActive(true);
+        }
+
+        if (health == 2)
+        {
+            heart3.SetActive(false);
+            heart2.SetActive(true);
+            heart1.SetActive(true);
+        }
+
+        if (health == 1)
+        {
+            heart3.SetActive(false);
+            heart2.SetActive(false);
+            heart1.SetActive(true);
+        }
+
+        if (health == 0)
+        {
+            heart3.SetActive(false);
+            heart2.SetActive(false);
+            heart1.SetActive(false);
+
+
             Die();//die function
 
+            print("dead");
 
         }
+
+      
 
     }
 
@@ -200,7 +237,23 @@ public class Player : MonoBehaviour
 
 
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Pickup"))
+        {
+            count += 1;
+            pickup.Play();
+            Destroy(other.gameObject);
+            print("its touching");
+            CountText();
+        }
+    }
 
+
+    void CountText()
+    {
+        countText.text = " X" + count.ToString();
+    }
 
 
 
