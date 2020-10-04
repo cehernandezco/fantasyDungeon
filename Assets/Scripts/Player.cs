@@ -10,6 +10,11 @@ public class Player : MonoBehaviour
     public Text countText;
     private int count = 0;
 
+    public float distance;
+    public float inputVertical;
+    public float inputHorizontal;
+
+
     public float speed;
     public float jumpforce;
     public float wallSlidingSpeed;
@@ -27,6 +32,8 @@ public class Player : MonoBehaviour
 
     public LayerMask isGround;
     public LayerMask enemy;
+    public LayerMask whatIsLadder;
+    public bool isClimbing;
 
     public Animator animator;
 
@@ -68,68 +75,99 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float movement = Input.GetAxisRaw("Horizontal"); // to make player move horizontal axis
-        rb2d.velocity = new Vector2(movement * speed, rb2d.velocity.y); // make player movement times its speed
+        if(this != null)
+        {
+            float movement = Input.GetAxisRaw("Horizontal"); // to make player move horizontal axis
+            rb2d.velocity = new Vector2(movement * speed, rb2d.velocity.y); // make player movement times its speed
 
-        if(movement == 0)
-        {
-            animator.SetBool("Run",false);
-            walk.Play();
-        }
-        else
-        {
-            animator.SetBool("Run", true);
-            
+            //climb ladder
+            RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, whatIsLadder);
+            if (hitInfo.collider != null )
+            {
+                print(hitInfo.collider);
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    isClimbing = true;
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    isClimbing = false;
+                }
+
+            }
+            if (isClimbing)
+            {
+                inputVertical = Input.GetAxisRaw("Vertical");
+                rb2d.velocity = new Vector2(rb2d.position.x, inputVertical * speed);
+                rb2d.gravityScale = 0;
+            }
+            else
+            {
+                rb2d.gravityScale = 3;
+            }
+
+            if (movement == 0)
+            {
+                animator.SetBool("Run", false);
+                walk.Play();
+            }
+            else
+            {
+                animator.SetBool("Run", true);
+
+            }
+
+            Jump(); //calling jump function
+
+
+
+            //TO FLIP THE CHARACTER SCALE
+            Vector3 characterScale = transform.localScale;
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                characterScale.x = -1; //change player scale to -1 or opposite direction
+            }
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                characterScale.x = 1;//change player scale to 1
+            }
+            transform.localScale = characterScale;
+
+
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+
+                Attack(); //calling attack function
+                hit.Play();
+            }
+
+
+
+            isTouching = Physics2D.OverlapCircle(ledgeCheck.position, checkRadius, isGround); //to make sure the player is touching ground
+
+            if (isTouching == true && isGrounded == false && movement == 0)//if the player is touching ground and movement is 0
+            {
+                wallSliding = true;
+                animator.SetBool("Slide", true);//play slide animation
+            }
+            else
+            {
+                wallSliding = false;
+                animator.SetBool("Slide", false);//not to play slide animation
+            }
+
+
+            if (wallSliding)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Clamp(rb2d.velocity.y, -wallSlidingSpeed, float.MaxValue));
+            }
         }
         
-       
         
-      
-        Jump(); //calling jump function
-
-
-
-        //TO FLIP THE CHARACTER SCALE
-        Vector3 characterScale = transform.localScale;
-        if(Input.GetAxis("Horizontal") < 0)
-        {
-            characterScale.x = -1; //change player scale to -1 or opposite direction
-        }
-        if(Input.GetAxis("Horizontal") > 0)
-        {
-            characterScale.x = 1;//change player scale to 1
-        }
-        transform.localScale = characterScale;
-
-
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-           
-            Attack(); //calling attack function
-            hit.Play();
-        }
-
-
-
-        isTouching = Physics2D.OverlapCircle(ledgeCheck.position, checkRadius, isGround); //to make sure the player is touching ground
-
-        if(isTouching == true && isGrounded == false && movement == 0)//if the player is touching ground and movement is 0
-        {
-            wallSliding = true;
-            animator.SetBool("Slide", true);//play slide animation
-        }
-        else
-        {
-            wallSliding = false;
-            animator.SetBool("Slide", false);//not to play slide animation
-        }
-
-
-        if (wallSliding )
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, Mathf.Clamp(rb2d.velocity.y, -wallSlidingSpeed, float.MaxValue));
-        }
     }
 
 
@@ -214,7 +252,7 @@ public class Player : MonoBehaviour
             Die();//die function
 
             print("dead");
-
+            continueMenu();
         }
 
       
@@ -232,10 +270,16 @@ public class Player : MonoBehaviour
         Destroy(gameObject, 2);
 
 
+        continueMenu();
+
     }
 
 
+    public void continueMenu()
+    {
+        SceneManager.LoadScene("Menu");
 
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -246,6 +290,26 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
             print("its touching");
             CountText();
+        }
+        if (other.gameObject.CompareTag("spikes"))
+        {
+            Die();
+        }
+        if (other.gameObject.CompareTag("closed"))
+        {
+            
+            /*
+            if(other.name == "stick_closed")
+            {
+                other.visible = false;
+                
+            }*/
+        }
+        if (other.gameObject.CompareTag("ladder"))
+        {
+            //climbing ladder
+            print("ladder");
+            
         }
     }
 

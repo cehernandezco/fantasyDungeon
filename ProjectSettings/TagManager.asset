@@ -9,6 +9,10 @@ TagManager:
   - turn
   - sword
   - Pickup
+  - spikes
+  - closed
+  - open
+  - ladder
   layers:
   - Default
   - TransparentFX
@@ -22,7 +26,7 @@ TagManager:
   - Wall
   - Enemy
   - Player
-  - 
+  - Ladder
   - 
   - 
   - 

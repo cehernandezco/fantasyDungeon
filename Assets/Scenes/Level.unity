@@ -5628,8 +5628,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556124997}
   m_Enabled: 1
-  m_SortingLayerID: -1237116891
-  m_SortingLayer: -2
+  m_SortingLayerID: 247015433
+  m_SortingLayer: 2
   m_SortingOrder: 0
 --- !u!4 &576870431 stripped
 Transform:
@@ -6392,6 +6392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08c31da93d1b504b95c1cba67d7f6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  countText: {fileID: 0}
   speed: 6
   jumpforce: 9
   wallSlidingSpeed: 3
@@ -6411,6 +6413,9 @@ MonoBehaviour:
     m_Bits: 1024
   animator: {fileID: 764978526}
   rb2d: {fileID: 764978528}
+  heart1: {fileID: 0}
+  heart2: {fileID: 0}
+  heart3: {fileID: 0}
 --- !u!212 &764978530
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8223,6 +8228,7 @@ MonoBehaviour:
   healthbar: {fileID: 546123595}
   killCount: {fileID: 529609657}
   enemyDeath: 0
+  blood: {fileID: 0}
 --- !u!95 &1084100379
 Animator:
   serializedVersion: 3
@@ -9178,7 +9184,7 @@ SortingGroup:
   m_GameObject: {fileID: 1739782826}
   m_Enabled: 1
   m_SortingLayerID: -200437095
-  m_SortingLayer: -3
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!1 &1756888003
 GameObject:
@@ -9469,6 +9475,7 @@ MonoBehaviour:
   healthbar: {fileID: 821094644}
   killCount: {fileID: 529609657}
   enemyDeath: 0
+  blood: {fileID: 0}
 --- !u!95 &1924378229
 Animator:
   serializedVersion: 3
@@ -9932,6 +9939,7 @@ MonoBehaviour:
   healthbar: {fileID: 1875319314}
   killCount: {fileID: 0}
   enemyDeath: 0
+  blood: {fileID: 0}
 --- !u!95 &1987887748
 Animator:
   serializedVersion: 3
@@ -10123,7 +10131,7 @@ SortingGroup:
   m_GameObject: {fileID: 2082596834}
   m_Enabled: 1
   m_SortingLayerID: -200437095
-  m_SortingLayer: -3
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!1 &2090347709
 GameObject:
@@ -10179,6 +10187,7 @@ MonoBehaviour:
   healthbar: {fileID: 1888160980}
   killCount: {fileID: 0}
   enemyDeath: 0
+  blood: {fileID: 0}
 --- !u!95 &2090347711
 Animator:
   serializedVersion: 3

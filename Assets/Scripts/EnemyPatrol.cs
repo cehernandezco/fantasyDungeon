@@ -238,15 +238,15 @@ public class EnemyPatrol : MonoBehaviour
 
     void Die()
     {
-        enemyDeath += 1;
-
+        
         killCount.text = "" + enemyDeath.ToString();
         anim.SetBool("Die", true); //play death animation
         print("Enemy Died");//print out 
        // GetComponent<Collider2D>().enabled = true;//to disable the collider after death
         this.enabled = false;//to disable the script after death
         Destroy(gameObject, 1);
-        
+
+        enemyDeath += 1;
 
     }
 
